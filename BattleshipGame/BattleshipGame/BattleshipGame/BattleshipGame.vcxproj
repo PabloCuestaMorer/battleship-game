@@ -128,7 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Battleship.cpp" />
-    <ClCompile Include="BattleshipGame.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Carrier.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="PatrolBoat.cpp" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battleship.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="Carrier.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="PatrolBoat.h" />

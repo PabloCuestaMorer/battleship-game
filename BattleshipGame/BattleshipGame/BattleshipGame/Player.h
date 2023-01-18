@@ -7,7 +7,9 @@
  *********************************************************************/
 #pragma once
 #include <string>
+#include <iostream>
 #include "Ship.h"
+#include "Board.h"
 
 using namespace std;
 class Player
@@ -15,7 +17,15 @@ class Player
 private:
 	string name;
 	Ship ships[5];
-	char gameBoard[10][10];
-	char shotHistory[10][10];
+	Board shipsBoard;
+	Board shotsBoard;
+public:
+	Player();
+	string getName();
+	void setName(string name);
+	Board getShipsBoard();
+	void setShipsBoard(Board b);
+	Board getShotsBoard();
+	void setShotsBoard(Board b);
 };
 

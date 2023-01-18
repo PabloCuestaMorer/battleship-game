@@ -1,23 +1,22 @@
 /*****************************************************************//**
- * \file   Game.h
+ * \file   Board.h
  * \brief  
  * 
  * \author pablo
  * \date   January 2023
  *********************************************************************/
 #pragma once
-#include "Player.h"
+#include <iostream>
 
 using namespace std;
-class Game
+class Board
 {
 private:
-	Player player1;
-	Player player2;
+    char board[11][11];
+    void fillBoard();
+
 public:
-	Player getPlayer1();
-	void setPlayer1(Player player1);
-	Player getPlayer2();
-	void setPlayer2(Player player2);
+    Board();
+    void displayBoard();
 };
 
