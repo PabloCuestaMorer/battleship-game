@@ -10,14 +10,14 @@ void Ship::setName(string name)
 	this->name = name;
 }
 
-int Ship::getLength()
+int Ship::getSize()
 {
-	return length;
+	return size;
 }
 
-void Ship::setLength(int length)
+void Ship::setSize(int size)
 {
-	this->length = length;
+	this->size = size;
 }
 
 char Ship::getSymbol()
@@ -58,4 +58,11 @@ char Ship::getY()
 void Ship::setY()
 {
 	this->y = y;
+}
+
+istream& operator>>(istream& cin, Ship& ship)
+{
+	cout << "Enter the " << ship.name << " coordinates (x y) and orientation (h/v): ";
+	cin >> ship.x >> ship.y >> ship.orientation;
+	return cin;
 }

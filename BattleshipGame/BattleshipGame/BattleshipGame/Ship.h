@@ -6,6 +6,7 @@
  * \date   January 2023
  *********************************************************************/
 #pragma once
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -13,15 +14,15 @@ class Ship
 {
 protected:
 	string name;
-	int length;
+	int size;
 	char symbol;
 	char orientation;
 	int x, y;
 public:
 	string getName();
 	void setName(string name);
-	int getLength();
-	void setLength(int length);
+	int getSize();
+	void setSize(int size);
 	char getSymbol();
 	void setSymbol(char symbol);
 	char getOrientation();
@@ -30,5 +31,7 @@ public:
 	void setX();
 	char getY();
 	void setY();
+
+	friend istream& operator>>(istream& input, Ship& ship);
 };
 

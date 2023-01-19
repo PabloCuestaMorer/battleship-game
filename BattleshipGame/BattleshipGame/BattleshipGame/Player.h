@@ -9,23 +9,33 @@
 #include <string>
 #include <iostream>
 #include "Ship.h"
+#include "Carrier.h"
+#include "Battleship.h"
+#include "Submarine.h"
+#include "PatrolBoat.h"
+#include "Vessel.h"
 #include "Board.h"
+#include <vector>
 
 using namespace std;
 class Player
 {
 private:
 	string name;
-	Ship ships[5];
-	Board shipsBoard;
-	Board shotsBoard;
+	vector<Ship*> ships;
+	int const ROWS = 10;
+	int const COLS = 10;
+	char board[10][10];
+	bool canPlaceShip(int row, int col, int size, bool isHorizontal);
+	void placeShip(int row, int col, int size, bool isHorizontal);
 public:
 	Player();
 	string getName();
 	void setName(string name);
-	Board getShipsBoard();
-	void setShipsBoard(Board b);
-	Board getShotsBoard();
-	void setShotsBoard(Board b);
+
+	void placeShips();
+	bool shoot(int x, int y);
+	bool allSunk();
+	void printBoard();
 };
 

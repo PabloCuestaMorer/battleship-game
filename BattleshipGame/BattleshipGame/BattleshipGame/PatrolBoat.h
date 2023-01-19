@@ -9,5 +9,7 @@
 #include "Ship.h"
 class PatrolBoat : public Ship
 {
+public:
+	PatrolBoat();
 };
 
