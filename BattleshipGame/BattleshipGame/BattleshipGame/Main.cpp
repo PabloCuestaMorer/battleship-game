@@ -7,6 +7,10 @@
  *********************************************************************/
 
 #include <iostream>
+#include <chrono>
+#include <thread>
+#include <cstdlib>
+
 #include "Game.h"
 #include "Player.h"
 
@@ -21,15 +25,23 @@ void displayMenu()
 	cout << "Enter your selection: ";
 }
 
-
+void waitForSeconds(int seconds)
+{
+	//cout << "Waiting for " << seconds << " seconds:" << endl;
+	for (int i = seconds; i > 0; i--)
+	{
+		cout << i << "..." << endl;
+		this_thread::sleep_for(chrono::seconds(1));
+	}
+	//cout << "Done!" << endl;
+}
 
 void startNewGame()
 {
 	//Game game;
 
+//INI Player1 ships
 	Player player1;
-
-	//INI Player1
 	cout << "Enter the name of player 1: ";
 	string name1;
 	cin >> name1;
@@ -38,9 +50,27 @@ void startNewGame()
 
 
 	system("CLS");
-	cout << player1.getName() << ", it's your turn to place your boats. Be careful!" << endl;
-	
-	player1.placeShips();
+	cout << player1.getName() << ", it's your turn to place your boats. Be smart!" << endl;
+	//player1.placeShips();
+//END Player1 ships
+
+	cout << "Player 2 turn..." << endl;
+	waitForSeconds(5);
+	system("cls");
+
+//INI Player2 ships
+	Player player2;
+	cout << "Enter the name of player 2: ";
+	string name2;
+	cin >> name2;
+	player2.setName(name2);
+	//game.setPlayer1(player2);
+
+
+	system("CLS");
+	cout << player2.getName() << ", it's your turn to place your boats. Be smarter!" << endl;
+	player2.placeShips();
+//END Player2 ships
 
 }
 
