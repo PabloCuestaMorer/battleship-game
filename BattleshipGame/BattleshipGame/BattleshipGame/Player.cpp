@@ -89,6 +89,7 @@ void Player::placeShips()
 	cout << name << "'s game board:" << endl;
 	for (int i = 0; i < ships.size(); i++)
 	{
+		printBoard();
 		cout << "Placing " << ships[i]->getName() << " of size " << ships[i]->getSize() << endl;
 		cout << "Enter row coordinate (A-J): ";
 		char row;
@@ -109,6 +110,28 @@ void Player::placeShips()
 			cout << "Invalid coordinates. Please try again." << endl;
 			i--;
 		}
+	}
+	system("CLS");
+	cout << name << "'s game board:" << endl;
+	printBoard();
+}
+
+void Player::printBoard()
+{
+	cout << "  ";
+	for (int i = 0; i < COLS; i++)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
+	for (int i = 0; i < ROWS; i++)
+	{
+		cout << (char)('A' + i) << " ";
+		for (int j = 0; j < COLS; j++)
+		{
+			cout << board[i][j] << " ";
+		}
+		cout << endl;
 	}
 }
 

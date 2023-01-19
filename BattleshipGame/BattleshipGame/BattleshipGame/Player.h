@@ -8,6 +8,11 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
+#include <chrono>
+#include <thread>
+#include <cstdlib>
+
 #include "Ship.h"
 #include "Carrier.h"
 #include "Battleship.h"
@@ -15,7 +20,7 @@
 #include "PatrolBoat.h"
 #include "Vessel.h"
 #include "Board.h"
-#include <vector>
+
 
 using namespace std;
 class Player
