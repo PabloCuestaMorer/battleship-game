@@ -94,16 +94,18 @@ void battle(Game game)
 			shoot(player1, player1Turn, gameOver);
 			cout << player1.getName() << "'s board: " << endl;
 			player1.printBoard();
+			player1.printShootingBoard();
 			cout << "It's " << player2.getName() << "turn!" << endl;
-			waitForSeconds(5);
+			waitForSeconds(10);
 			system("cls"); 
 		} else
 		{
 			shoot(player2, player1Turn, gameOver);
 			cout << player2.getName() << "'s board: " << endl;
 			player2.printBoard();
+			player2.printShootingBoard();
 			cout << "It's " << player1.getName() << "turn!" << endl;
-			waitForSeconds(5);
+			waitForSeconds(10);
 			system("cls");
 		}
 
@@ -124,11 +126,13 @@ void startNewGame()
 	//Place ships
 	system("CLS");
 	cout << player1.getName() << ", it's your turn to place your boats. Be smart!" << endl;
-	player1.placeShips();
+	//player1.placeShips();
+	player1.placeShipsRandomly();
 	//END Player1 ships
 
-	cout << "Player 2 turn..." << endl;
-	waitForSeconds(5);
+	cout << endl;
+	cout << "Player 2's turn to place the ships in the ..." << endl;
+	waitForSeconds(10);
 	system("cls");
 
 	//INI Player2 ships
@@ -140,7 +144,8 @@ void startNewGame()
 	//Place ships
 	system("CLS");
 	cout << player2.getName() << ", it's your turn to place your boats. Be smarter!" << endl;
-	player2.placeShips();
+	//player2.placeShips();
+	player2.placeShipsRandomly();
 	//END Player2 ships
 
 	game.setPlayer(player1, 1);

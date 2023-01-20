@@ -38,6 +38,7 @@ bool Player::canPlaceShip(int row, int col, int size, bool isHorizontal)
 	return true;
 }
 
+
 void Player::placeShip(int row, int col, int size, bool isHorizontal)
 {
 	if (isHorizontal)
@@ -141,6 +142,35 @@ void Player::placeShips()
 	printBoard();
 }
 
+/**
+ * Places the 5 ships randomly in the board, respecting a 1 space gap around each ship.
+ * Ships can touch the edges of the board, but not with each other..
+ *
+ * @param None
+ * @return None
+ */
+void Player::placeShipsRandomly()
+{
+	for (auto ship : ships)
+	{
+		bool placed = false;
+		while (!placed)
+		{
+			int row = rand() % ROWS;
+			int col = rand() % COLS;
+			bool isHorizontal = rand() % 2;
+			if (canPlaceShip(row, col, ship->getSize(), isHorizontal))
+			{
+				placeShip(row, col, ship->getSize(), isHorizontal);
+				placed = true;
+			}
+		}
+	}
+	cout << endl;
+	cout << name << "'s game board (randomly generated):" << endl;
+	printBoard();
+}
+
 bool Player::shoot(int x, int y)
 {
 	if (board[x][y] == 'S')
@@ -179,6 +209,8 @@ bool Player::shoot(int x, int y)
 	}
 }
 
+
+
 void Player::printBoard()
 {
 	cout << "  ";
@@ -193,6 +225,33 @@ void Player::printBoard()
 		for (int j = 0; j < COLS; j++)
 		{
 			cout << board[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+/**
+ * Display the history board of shooting for the indicated player
+ * This method will display the board of the indicated player, but just with the shots and the hits made
+ * by the opponent. This board can be used to show the history of the shots made by the opponent and check
+ * where the player's ships have been hit..
+ * 
+ * \param player The player whose history board will be displayed
+ */
+void Player::printShootingBoard()
+{
+	cout << name << "'s history board:" << endl;
+	for (int i = 0; i < ROWS; i++)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			if (board[i][j] == 'S')
+			{
+				cout << board[i][j] << " ";
+			} else
+			{
+				cout << board[i][j];
+			}
 		}
 		cout << endl;
 	}
@@ -278,5 +337,3 @@ Player& Player::operator=(const Player& other)
 	}
 	return *this;
 }
-
-
