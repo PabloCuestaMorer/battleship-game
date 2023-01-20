@@ -213,7 +213,8 @@ bool Player::shoot(int x, int y)
 
 void Player::printBoard()
 {
-	cout << "  ";
+	cout << endl;
+	cout << name << "'s board: " << endl;
 	for (int i = 0; i < COLS; i++)
 	{
 		cout << i << " ";

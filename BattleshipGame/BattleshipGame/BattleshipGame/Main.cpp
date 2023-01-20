@@ -76,6 +76,16 @@ void waitForSeconds(int seconds)
 	//cout << "Done!" << endl;
 }
 
+int displayTurnsMenu()
+{
+	int choice = 0;
+	cout << endl;
+	cout << "1. Pass Turn" << endl;
+	cout << "2. Save Game" << endl;
+	cin >> choice;
+	return choice;
+}
+
 void battle(Game game)
 {
 	Player player1 = game.getPlayer(1);
@@ -91,25 +101,47 @@ void battle(Game game)
 	{
 		if (player1Turn)
 		{
-			shoot(player1, player1Turn, gameOver);
-			cout << player1.getName() << "'s board: " << endl;
-			player1.printBoard();
-			player1.printShootingBoard();
-			cout << "It's " << player2.getName() << "turn!" << endl;
-			waitForSeconds(10);
-			system("cls"); 
+			int choice = displayTurnsMenu();
+			if (choice == 1)
+			{
+				player1.printBoard();
+				player1.printShootingBoard();
+				cout << "It's " << player1.getName() << "turn!" << endl;
+				shoot(player1, player1Turn, gameOver);
+			} else if (choice == 2)
+			{
+				string filename;
+				cout << "Enter filename: ";
+				cin >> filename;
+				game.saveGame(filename);
+				cout << "Game saved!" << endl;
+			}
+			else
+			{
+				cout << "Invalid choice. Please try again." << endl;
+			}
+			
 		} else
 		{
-			shoot(player2, player1Turn, gameOver);
-			cout << player2.getName() << "'s board: " << endl;
-			player2.printBoard();
-			player2.printShootingBoard();
-			cout << "It's " << player1.getName() << "turn!" << endl;
-			waitForSeconds(10);
-			system("cls");
+			int choice = displayTurnsMenu();
+			if (choice == 1)
+			{
+				player2.printBoard();
+				player2.printShootingBoard();
+				cout << "It's " << player2.getName() << "turn!" << endl;
+				shoot(player2, player1Turn, gameOver);
+			} else if (choice == 2)
+			{
+				string filename;
+				cout << "Enter filename: ";
+				cin >> filename;
+				game.saveGame(filename);
+				cout << "Game saved!" << endl;
+			} else
+			{
+				cout << "Invalid choice. Please try again." << endl;
+			}
 		}
-
-
 	}
 }
 
