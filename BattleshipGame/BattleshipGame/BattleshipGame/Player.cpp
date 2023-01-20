@@ -215,6 +215,8 @@ void Player::printBoard()
 {
 	cout << endl;
 	cout << name << "'s board: " << endl;
+	//Space for the board frame
+	cout << "  ";
 	for (int i = 0; i < COLS; i++)
 	{
 		cout << i << " ";
@@ -229,6 +231,7 @@ void Player::printBoard()
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 /**
@@ -241,21 +244,30 @@ void Player::printBoard()
  */
 void Player::printShootingBoard()
 {
-	cout << name << "'s history board:" << endl;
+	cout << name << "'s shooting history board:" << endl;
+	//Space for the board frame
+	cout << "  ";
+	for (int i = 0; i < COLS; i++)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
 	for (int i = 0; i < ROWS; i++)
 	{
+		cout << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
 			if (board[i][j] == 'S')
 			{
-				cout << board[i][j] << " ";
+				cout << "." << " ";
 			} else
 			{
-				cout << board[i][j];
+				cout << board[i][j] << " ";
 			}
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 bool Player::allSunk()
