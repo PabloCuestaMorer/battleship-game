@@ -92,14 +92,22 @@ void battle(Game game)
 		if (player1Turn)
 		{
 			shoot(player1, player1Turn, gameOver);
+			cout << player1.getName() << "'s board: " << endl;
+			player1.printBoard();
+			cout << "It's " << player2.getName() << "turn!" << endl;
+			waitForSeconds(5);
+			system("cls"); 
 		} else
 		{
 			shoot(player2, player1Turn, gameOver);
+			cout << player2.getName() << "'s board: " << endl;
+			player2.printBoard();
+			cout << "It's " << player1.getName() << "turn!" << endl;
+			waitForSeconds(5);
+			system("cls");
 		}
-		cout << player1.getName() << "'s board: " << endl;
-		player1.printBoard();
-		cout << player2.getName() << "'s board: " << endl;
-		player2.printBoard();
+
+
 	}
 }
 
