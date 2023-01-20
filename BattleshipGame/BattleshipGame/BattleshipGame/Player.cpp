@@ -86,18 +86,42 @@ void Player::setName(string name)
 
 void Player::placeShips()
 {
-	cout << name << "'s game board:" << endl;
 	for (int i = 0; i < ships.size(); i++)
 	{
+		cout << endl;
+		cout << name << "'s game board:" << endl;
 		printBoard();
+		cout << endl;
 		cout << "Placing " << ships[i]->getName() << " of size " << ships[i]->getSize() << endl;
 		cout << "Enter row coordinate (A-J): ";
 		char row;
 		cin >> row;
+		try
+		{
+			if (!isalpha(row) || !isupper(row) || row < 'A' || row > 'J')
+				throw invalid_argument("Invalid row coordinate. Please enter a valid letter between A and J in uppercase.");
+		} catch (const invalid_argument& e)
+		{
+			system("CLS");
+			cout << e.what() << endl;
+			i--;
+			continue;
+		}
 		int x = row - 'A';
 		cout << "Enter column coordinate (0-9): ";
 		int y;
 		cin >> y;
+		try
+		{
+			if (/*!isdigit(y) || */y < 0 || y > 9)
+				throw invalid_argument("Invalid column coordinate. Please enter a valid number between 0 and 9.");
+		} catch (const invalid_argument& e)
+		{
+			system("CLS");
+			cout << e.what() << endl;
+			i--;
+			continue;
+		}
 		cout << "Enter orientation (H for horizontal, V for vertical): ";
 		char orientation;
 		cin >> orientation;
@@ -107,6 +131,7 @@ void Player::placeShips()
 			placeShip(x, y, ships[i]->getSize(), isHorizontal);
 		} else
 		{
+			system("CLS");
 			cout << "Invalid coordinates. Please try again." << endl;
 			i--;
 		}
