@@ -116,6 +116,44 @@ void Player::placeShips()
 	printBoard();
 }
 
+bool Player::shoot(int x, int y)
+{
+	if (board[x][y] == 'S')
+	{
+		board[x][y] = 'X';
+		for (int i = 0; i < ships.size(); i++)
+		{
+			int size = ships[i]->getSize();
+			bool sunk = true;
+			for (int j = 0; j < ROWS; j++)
+			{
+				for (int k = 0; k < COLS; k++)
+				{
+					if (board[j][k] == 'S')
+					{
+						sunk = false;
+						break;
+					}
+				}
+				if (!sunk)
+				{
+					break;
+				}
+			}
+			if (sunk)
+			{
+				ships[i]->setIsSunk(true);
+				cout << ships[i]->getName() << " is sunk!" << endl;
+			}
+		}
+		return true;
+	} else
+	{
+		board[x][y] = '*';
+		return false;
+	}
+}
+
 void Player::printBoard()
 {
 	cout << "  ";
@@ -133,6 +171,87 @@ void Player::printBoard()
 		}
 		cout << endl;
 	}
+}
+
+bool Player::allSunk()
+{
+	for (int i = 0; i < ships.size(); i++)
+	{
+		if (!ships[i]->getIsSunk())
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Player::savePlayer(string filename)
+{
+	ofstream file(filename);
+	if (file.is_open())
+	{
+		file << name << endl;
+		for (int i = 0; i < ships.size(); i++)
+		{
+			file << ships[i]->getName() << " " << ships[i]->getSize() << " " << ships[i]->getIsSunk() << endl;
+		}
+		for (int i = 0; i < ROWS; i++)
+		{
+			for (int j = 0; j < COLS; j++)
+			{
+				file << board[i][j] << " ";
+			}
+			file << endl;
+		}
+		file.close();
+	}
+}
+
+void Player::loadPlayer(string filename)
+{
+	ifstream file(filename);
+	if (file.is_open())
+	{
+		file >> name;
+		for (int i = 0; i < ships.size(); i++)
+		{
+			string shipName;
+			int shipSize;
+			bool shipSunk;
+			file >> shipName >> shipSize >> shipSunk;
+			ships[i]->setName(shipName);
+			ships[i]->setSize(shipSize);
+			ships[i]->setIsSunk(shipSunk);
+		}
+		for (int i = 0; i < ROWS; i++)
+		{
+			for (int j = 0; j < COLS; j++)
+			{
+				file >> board[i][j];
+			}
+		}
+		file.close();
+	}
+}
+
+Player& Player::operator=(const Player& other)
+{
+	if (this != &other)
+	{
+		name = other.name;
+		for (int i = 0; i < ships.size(); i++)
+		{
+			ships[i] = new Ship(*(other.ships[i]));
+		}
+		for (int i = 0; i < ROWS; i++)
+		{
+			for (int j = 0; j < COLS; j++)
+			{
+				board[i][j] = other.board[i][j];
+			}
+		}
+	}
+	return *this;
 }
 
 

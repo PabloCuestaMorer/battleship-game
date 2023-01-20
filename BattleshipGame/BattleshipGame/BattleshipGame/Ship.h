@@ -18,7 +18,9 @@ protected:
 	char symbol;
 	char orientation;
 	int x, y;
+	bool isSunk;
 public:
+	Ship();
 	string getName();
 	void setName(string name);
 	int getSize();
@@ -31,6 +33,8 @@ public:
 	void setX();
 	char getY();
 	void setY();
+	bool getIsSunk();
+	void setIsSunk(bool sunk);
 
 	friend istream& operator>>(istream& input, Ship& ship);
 };

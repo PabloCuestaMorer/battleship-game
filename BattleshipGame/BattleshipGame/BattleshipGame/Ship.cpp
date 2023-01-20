@@ -1,5 +1,15 @@
 #include "Ship.h"
 
+Ship::Ship()
+{
+	name = "Ship";
+	size = 0;
+	symbol = 'S';
+	orientation = 'V';
+	x = 0;
+	y = 0;
+}
+
 string Ship::getName()
 {
 	return name;
@@ -58,6 +68,16 @@ char Ship::getY()
 void Ship::setY()
 {
 	this->y = y;
+}
+
+bool Ship::getIsSunk()
+{
+	return this->isSunk;
+}
+
+void Ship::setIsSunk(bool sunk)
+{
+	this->isSunk = sunk;
 }
 
 istream& operator>>(istream& cin, Ship& ship)

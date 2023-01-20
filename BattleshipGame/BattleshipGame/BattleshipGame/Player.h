@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 
 #include "Ship.h"
@@ -40,5 +41,10 @@ public:
 	bool shoot(int x, int y);
 	bool allSunk();
 	void printBoard();
+	void savePlayer(string filename);
+	void loadPlayer(string filename);
+
+	//Overloading
+	Player& operator=(const Player& other);
 };
 
