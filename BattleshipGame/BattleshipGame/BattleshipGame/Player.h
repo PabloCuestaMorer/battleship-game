@@ -11,6 +11,7 @@
 #include <vector>
 #include <fstream>
 #include <random>	
+#include <iomanip> // to change the color of the text output to the console.
 
 
 #include "Ship.h"
@@ -32,8 +33,8 @@ private:
 	int const COLS = 10;
 	char board[10][10];
 	// private methods
-	bool canPlaceShip(int row, int col, int size, bool isHorizontal);
-	void placeShip(int row, int col, int size, bool isHorizontal);
+	bool canPlaceShip(Ship* ship);
+	void placeShip(Ship* ship);
 
 public:
 	Player();
@@ -45,7 +46,7 @@ public:
 	void placeShipsRandomly();
 	bool shoot(int x, int y);
 	bool allSunk();
-	void printBoard();
+	void printShipsBoard();
 	void printShootingBoard();
 	void savePlayer(string filename);
 	void loadPlayer(string filename);

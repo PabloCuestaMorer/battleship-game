@@ -55,7 +55,7 @@ char Ship::getX()
 	return x;
 }
 
-void Ship::setX()
+void Ship::setX(int x)
 {
 	this->x = x;
 }
@@ -65,7 +65,7 @@ char Ship::getY()
 	return y;
 }
 
-void Ship::setY()
+void Ship::setY(int y)
 {
 	this->y = y;
 }

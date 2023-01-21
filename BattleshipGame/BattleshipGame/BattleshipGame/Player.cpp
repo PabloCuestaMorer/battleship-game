@@ -1,16 +1,16 @@
-#include "Player.h"
+﻿#include "Player.h"
 
-bool Player::canPlaceShip(int row, int col, int size, bool isHorizontal)
+bool Player::canPlaceShip(Ship* ship)
 {
-	if (isHorizontal)
+	if (ship->getOrientation() == 'H')
 	{
-		if (col + size > COLS)
+		if (ship->getY() + ship->getSize() > COLS)
 		{
 			return false;
 		}
-		for (int i = col - 1; i <= col + size; i++)
+		for (int i = ship->getY() - 1; i <= ship->getY() + ship->getSize(); i++)
 		{
-			for (int j = row - 1; j <= row + 1; j++)
+			for (int j = ship->getX() - 1; j <= ship->getX() + 1; j++)
 			{
 				if (i >= 0 && i < COLS && j >= 0 && j < ROWS && board[j][i] != '.')
 				{
@@ -20,13 +20,13 @@ bool Player::canPlaceShip(int row, int col, int size, bool isHorizontal)
 		}
 	} else
 	{
-		if (row + size > ROWS)
+		if (ship->getX() + ship->getSize() > ROWS)
 		{
 			return false;
 		}
-		for (int i = row - 1; i <= row + size; i++)
+		for (int i = ship->getX() - 1; i <= ship->getX() + ship->getSize(); i++)
 		{
-			for (int j = col - 1; j <= col + 1; j++)
+			for (int j = ship->getY() - 1; j <= ship->getY() + 1; j++)
 			{
 				if (i >= 0 && i < ROWS && j >= 0 && j < COLS && board[i][j] != '.')
 				{
@@ -39,19 +39,19 @@ bool Player::canPlaceShip(int row, int col, int size, bool isHorizontal)
 }
 
 
-void Player::placeShip(int row, int col, int size, bool isHorizontal)
+void Player::placeShip(Ship* ship)
 {
-	if (isHorizontal)
+	if (ship->getOrientation() == 'H')
 	{
-		for (int i = col; i < col + size; i++)
+		for (int i = ship->getY(); i < ship->getY() + ship->getSize(); i++)
 		{
-			board[row][i] = 'S';
+			board[ship->getX()][i] = ship->getSymbol();
 		}
 	} else
 	{
-		for (int i = row; i < row + size; i++)
+		for (int i = ship->getX(); i < ship->getX() + ship->getSize(); i++)
 		{
-			board[i][col] = 'S';
+			board[i][ship->getY()] = ship->getSymbol();
 		}
 	}
 }
@@ -89,57 +89,55 @@ void Player::placeShips()
 {
 	for (int i = 0; i < ships.size(); i++)
 	{
-		cout << endl;
-		cout << name << "'s game board:" << endl;
-		printBoard();
+		Ship* currentShip = ships[i];
+		cout << name << ", it's your turn to place your boats. Be smart!" << endl;
+		printShipsBoard();
 		cout << endl;
 		cout << "Placing " << ships[i]->getName() << " of size " << ships[i]->getSize() << endl;
-		cout << "Enter row coordinate (A-J): ";
+		cout << "Enter row coordinate (A-J), colum coordinate (0-9) and orientation (H/V)." << endl;
+		cout << "Example A0V : ";
 		char row;
-		cin >> row;
+		char column;
+		char orientation;
+		cin >> row >> column >> orientation;
+		// Pass row to int (x)
+		int x = row - 'A';
+		int y = column - '0';
+		bool isHorizontal = (orientation == 'H');
 		try
 		{
 			if (!isalpha(row) || !isupper(row) || row < 'A' || row > 'J')
 				throw invalid_argument("Invalid row coordinate. Please enter a valid letter between A and J in uppercase.");
-		} catch (const invalid_argument& e)
-		{
-			system("CLS");
-			cout << e.what() << endl;
-			i--;
-			continue;
-		}
-		int x = row - 'A';
-		cout << "Enter column coordinate (0-9): ";
-		int y;
-		cin >> y;
-		try
-		{
-			if (/*!isdigit(y) || */y < 0 || y > 9)
+			if (!isdigit(column) || y < 0 || y > 9)
 				throw invalid_argument("Invalid column coordinate. Please enter a valid number between 0 and 9.");
+			if (!isalpha(orientation) || !isupper(orientation) || (orientation != 'V' && orientation != 'H'))
+				throw invalid_argument("Invalid orientation. Please enter a valid letter H/V in uppercase.");
 		} catch (const invalid_argument& e)
 		{
-			system("CLS");
-			cout << e.what() << endl;
+			system("cls");
+			cerr << "\033[1;31m" << e.what() << "\033[0m" << endl;
 			i--;
 			continue;
 		}
-		cout << "Enter orientation (H for horizontal, V for vertical): ";
-		char orientation;
-		cin >> orientation;
-		bool isHorizontal = (orientation == 'H');
-		if (canPlaceShip(x, y, ships[i]->getSize(), isHorizontal))
+		
+		//Set coordinates and orientation to ship
+		currentShip->setOrientation(orientation);
+		currentShip->setX(x);
+		currentShip->setY(y);
+		if (canPlaceShip(currentShip))
 		{
-			placeShip(x, y, ships[i]->getSize(), isHorizontal);
+			placeShip(currentShip);
+			system("cls");
+
 		} else
 		{
-			system("CLS");
-			cout << "Invalid coordinates. Please try again." << endl;
+			system("cls");
+			cerr << "\033[1;31m" << "Must leave a space of water between boats." << "\033[0m" << endl;
+			cerr << "\033[1;31m" << "Invalid coordinates. Please try again." << "\033[0m" << endl;
 			i--;
 		}
 	}
-	system("CLS");
-	cout << name << "'s game board:" << endl;
-	printBoard();
+	printShipsBoard();
 }
 
 /**
@@ -159,16 +157,16 @@ void Player::placeShipsRandomly()
 			int row = rand() % ROWS;
 			int col = rand() % COLS;
 			bool isHorizontal = rand() % 2;
-			if (canPlaceShip(row, col, ship->getSize(), isHorizontal))
+			if (canPlaceShip(ship))
 			{
-				placeShip(row, col, ship->getSize(), isHorizontal);
+				placeShip(ship);
 				placed = true;
 			}
 		}
 	}
 	cout << endl;
 	cout << name << "'s game board (randomly generated):" << endl;
-	printBoard();
+	printShipsBoard();
 }
 
 bool Player::shoot(int x, int y)
@@ -211,7 +209,7 @@ bool Player::shoot(int x, int y)
 
 
 
-void Player::printBoard()
+void Player::printShipsBoard()
 {
 	cout << endl;
 	cout << name << "'s board: " << endl;

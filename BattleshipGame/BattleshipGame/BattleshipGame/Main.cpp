@@ -91,7 +91,7 @@ void battle(Game game)
 	Player player2 = game.getPlayer(2);
 
 	cout << "The battle begins!" << endl;
-	waitForSeconds(5);
+	waitForSeconds(10);
 	system("cls");
 
 	bool gameOver = false;
@@ -114,7 +114,7 @@ void battle(Game game)
 
 			if (menuOp == 1)
 			{
-				player1.printBoard();
+				player1.printShipsBoard();
 				player1.printShootingBoard();
 				cout << "It's " << player1.getName() << "turn!" << endl;
 				shoot(player1, player1Turn, gameOver);
@@ -136,7 +136,7 @@ void battle(Game game)
 			cin >> menuOp;
 			if (menuOp == 1)
 			{
-				player2.printBoard();
+				player2.printShipsBoard();
 				player2.printShootingBoard();
 				cout << "It's " << player2.getName() << "turn!" << endl;
 				shoot(player2, player1Turn, gameOver);
@@ -168,13 +168,12 @@ void startNewGame()
 	player1.setName(name1);
 	//Place ships
 	system("CLS");
-	cout << player1.getName() << ", it's your turn to place your boats. Be smart!" << endl;
-	//player1.placeShips();
-	player1.placeShipsRandomly();
+	player1.placeShips();
+	//player1.placeShipsRandomly();
 	//END Player1 ships
 
 	cout << endl;
-	cout << "Player 2's turn to place the ships in the ..." << endl;
+	cout << "Player 2's turn to place the ships in... " << endl;
 	waitForSeconds(10);
 	system("cls");
 
@@ -186,9 +185,8 @@ void startNewGame()
 	player2.setName(name2);
 	//Place ships
 	system("CLS");
-	cout << player2.getName() << ", it's your turn to place your boats. Be smarter!" << endl;
-	//player2.placeShips();
-	player2.placeShipsRandomly();
+	player2.placeShips();
+	//player2.placeShipsRandomly();
 	//END Player2 ships
 
 	game.setPlayer(player1, 1);
@@ -235,14 +233,3 @@ int main()
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-

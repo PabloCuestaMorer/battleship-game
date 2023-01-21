@@ -30,9 +30,9 @@ public:
 	char getOrientation();
 	void setOrientation(char orientation);
 	char getX();
-	void setX();
+	void setX(int x);
 	char getY();
-	void setY();
+	void setY(int x);
 	bool getIsSunk();
 	void setIsSunk(bool sunk);
 
