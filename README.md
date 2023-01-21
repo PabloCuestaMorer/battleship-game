@@ -3,4 +3,7 @@ Battleship game project for the object-oriented programming (O.O.P.) module. San
 
 
 References:
-[1] A. Afulei, "color-console," [Online]. Available: https://github.com/aafulei/color-console.
+
+[1] Wikipedia, "Battleship (game)," [Online]. Available: https://en.wikipedia.org/wiki/Battleship_(game).
+[2] A. Afulei, "color-console," [Online]. Available: https://github.com/aafulei/color-console.
+
