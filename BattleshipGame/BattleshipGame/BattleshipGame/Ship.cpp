@@ -8,6 +8,8 @@ Ship::Ship()
 	orientation = 'V';
 	x = 0;
 	y = 0;
+	hits = 0;
+	isSunk = false;
 }
 
 string Ship::getName()
@@ -70,9 +72,31 @@ void Ship::setY(int y)
 	this->y = y;
 }
 
+int Ship::getHits()
+{
+	return hits;
+}
+
+void Ship::setHits(int hits)
+{
+	this->hits = hits;
+}
+
+void Ship::hit()
+{
+	++hits;
+}
+
 bool Ship::getIsSunk()
 {
-	return this->isSunk;
+	if (hits == size)
+	{
+		isSunk = true;
+	} else
+	{
+		isSunk = false;
+	}
+	return isSunk;
 }
 
 void Ship::setIsSunk(bool sunk)

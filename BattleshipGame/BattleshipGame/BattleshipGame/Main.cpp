@@ -16,55 +16,6 @@
 
 using namespace std;
 
-
-void shoot(Player& player, bool& player1Turn, bool& gameOver)
-{
-	cout << player.getName() << ", it's your turn to shoot. Enter coordinates (example: B3): ";
-	char row;
-	int col;
-	cin >> row >> col;
-	int x = row - 'A';
-	if (player.shoot(x, col))
-	{
-		cout << "Hit!" << endl;
-		if (player.allSunk())
-		{
-			if (player1Turn)
-			{
-				cout << "Hit, sunk and fleet destroyed! " << player.getName() << " wins!" << endl;
-			} else
-			{
-				cout << "Hit, sunk and fleet destroyed! " << player.getName() << " wins!" << endl;
-			}
-			gameOver = true;
-		} else
-		{
-			cout << "Enter coordinates again: ";
-			cin >> row >> col;
-			x = row - 'A';
-			if (player.shoot(x, col))
-			{
-				cout << "Hit!" << endl;
-				if (player.allSunk())
-				{
-					if (player1Turn)
-					{
-						cout << "Hit, sunk and fleet destroyed!" << player.getName() << " wins!" << endl;
-					} else
-					{
-						cout << "Hit, sunk and fleet destroyed! " << player.getName() << " wins!" << endl;
-					}
-					gameOver = true;
-				}
-			}
-		}
-	} else
-	{
-		cout << "Water!" << endl;
-		player1Turn = !player1Turn;
-	}
-}
-
 void waitForSeconds(int seconds)
 {
 	//cout << "Waiting for " << seconds << " seconds:" << endl;
@@ -78,82 +29,96 @@ void waitForSeconds(int seconds)
 
 void displayTurnsMenu()
 {
-
-	cout << "1. Pass Turn" << endl;
+	cout << endl;
+	cout << "1. Next move" << endl;
 	cout << "2. Save Game" << endl;
 	cout << "Enter your selection: ";
-
 }
 
 void battle(Game game)
 {
 	Player player1 = game.getPlayer(1);
 	Player player2 = game.getPlayer(2);
-
-	cout << "The battle begins!" << endl;
-	waitForSeconds(10);
-	system("cls");
-
 	bool gameOver = false;
 	bool player1Turn = true;
-	bool turnsCounter = 0;
+	int turnsCounter = 0;
+	int minTurns = 15; // minimum number of turns to win. At least the sum af all ships sizes
 	int menuOp = 0;
 	while (!gameOver)
 	{
-		if (player1Turn)
+		// The first time do not display the menu
+		if (turnsCounter == 0)
 		{
-			// The first time do not display the menu
-			if (turnsCounter == 0)
-			{
-				cout << "THE BATTLE BEGINS!" << endl;
-			} else
-			{
-				displayTurnsMenu();
-				cin >> menuOp;
-			}
-
-			if (menuOp == 1)
-			{
-				player1.printShipsBoard();
-				player1.printShootingBoard();
-				cout << "It's " << player1.getName() << "turn!" << endl;
-				shoot(player1, player1Turn, gameOver);
-			} else if (menuOp == 2)
-			{
-				string filename;
-				cout << "Enter filename: ";
-				cin >> filename;
-				game.saveGame(filename);
-				cout << "Game saved!" << endl;
-			} else
-			{
-				cout << "Invalid choice. Please try again." << endl;
-			}
-
+			cout << "THE BATTLE BEGINS!" << endl;
+			cout << endl;
+			menuOp = 1;
 		} else
 		{
 			displayTurnsMenu();
 			cin >> menuOp;
-			if (menuOp == 1)
+			system("cls");
+		}
+		if (menuOp == 1)
+		{
+			if (player1Turn)
 			{
-				player2.printShipsBoard();
+				// Display boards
+				player1.printShipsBoard();
 				player2.printShootingBoard();
-				cout << "It's " << player2.getName() << "turn!" << endl;
-				shoot(player2, player1Turn, gameOver);
-			} else if (menuOp == 2)
-			{
-				string filename;
-				cout << "Enter filename: ";
-				cin >> filename;
-				game.saveGame(filename);
-				cout << "Game saved!" << endl;
+				// Ask for shooting coordinates
+				cout << player1.getName() << ", it's your turn to shoot. Enter coordinates (example: B3): ";
+				char row;
+				int col;
+				cin >> row >> col;
+				int x = row - 'A';
+				// If player1 shoot player2. Hit = true: water = false
+				player1Turn = player2.shoot(x, col) ? true : false;
+				// Check gameOver
+				if (turnsCounter > minTurns && player2.allSunk())
+				{
+					cout << "Hit, sunk and fleet destroyed! " << player1.getName() << " wins!" << endl;
+					cout << player1.getName() << " has won in a total of " << turnsCounter << " moves." << endl;
+					cout << "Congratulations " << player1.getName() << " you are the champion." << endl;
+					gameOver = true;
+				}
 			} else
 			{
-				cout << "Invalid choice. Please try again." << endl;
+				// Display boards
+				player2.printShipsBoard();
+				player1.printShootingBoard();
+				// Ask for shooting coordinates
+				cout << player2.getName() << ", it's your turn to shoot. Enter coordinates (example: B3): ";
+				char row;
+				int col;
+				cin >> row >> col;
+				int x = row - 'A';
+				// If player1 shoot player2. Hit = true: water = false
+				player1Turn = player1.shoot(x, col) ? false : true;
+				// Check gameOver
+				if (turnsCounter > minTurns && player1.allSunk())
+				{
+					cout << "Hit, sunk and fleet destroyed! " << player2.getName() << " wins!" << endl;
+					cout << player2.getName() << " has won in a total of " << turnsCounter << " moves." << endl;
+					cout << "Congratulations " << player2.getName() << " you are the champion." << endl;
+					gameOver = true;
+				}
 			}
+		} else if (menuOp == 2)
+		{
+			//Save game option
+			string filename;
+			cout << "Enter filename: ";
+			cin >> filename;
+			game.saveGame(filename);
+			cout << "Game saved!" << endl;
+		} else
+		{
+			cout << "Invalid choice. Please try again." << endl;
 		}
 		turnsCounter++;
 	}
+	cout << endl;
+	cout << " GAME ENDS." << endl;
 }
 
 void startNewGame()
@@ -193,6 +158,11 @@ void startNewGame()
 	game.setPlayer(player2, 2);
 
 	//INI BATTLE
+	cout << endl;
+	cout << "The battle begins!" << endl;
+	waitForSeconds(10);
+	system("cls");
+
 	battle(game);
 	//END BATTLE
 }

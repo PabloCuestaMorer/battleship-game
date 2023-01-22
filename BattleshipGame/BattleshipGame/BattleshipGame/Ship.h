@@ -18,6 +18,7 @@ protected:
 	char symbol;
 	char orientation;
 	int x, y;
+	int hits;
 	bool isSunk;
 public:
 	Ship();
@@ -33,6 +34,9 @@ public:
 	void setX(int x);
 	char getY();
 	void setY(int x);
+	int getHits();
+	void setHits(int hits);
+	void hit();
 	bool getIsSunk();
 	void setIsSunk(bool sunk);
 

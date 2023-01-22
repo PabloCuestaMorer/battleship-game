@@ -38,7 +38,6 @@ bool Player::canPlaceShip(Ship* ship)
 	return true;
 }
 
-
 void Player::placeShip(Ship* ship)
 {
 	if (ship->getOrientation() == 'H')
@@ -119,7 +118,7 @@ void Player::placeShips()
 			i--;
 			continue;
 		}
-		
+
 		//Set coordinates and orientation to ship
 		currentShip->setOrientation(orientation);
 		currentShip->setX(x);
@@ -173,38 +172,37 @@ void Player::placeShipsRandomly()
 
 bool Player::shoot(int x, int y)
 {
-	if (board[x][y] == 'S')
+	if (board[x][y] == 'S' || board[x][y] == 'B' || board[x][y] == 'C' || board[x][y] == 'P' || board[x][y] == 'S' || board[x][y] == 'V')
 	{
-		board[x][y] = 'X';
-		for (int i = 0; i < ships.size(); i++)
+		char symbolHit = board[x][y];
+		// Find the ship in ships vector that mathes the hit symbol
+		auto it = find_if(ships.begin(), ships.end(), [symbolHit](Ship* ship) {
+			return ship->getSymbol() == symbolHit;
+			});
+
+		if (it != ships.end())
 		{
-			int size = ships[i]->getSize();
-			bool sunk = true;
-			for (int j = 0; j < ROWS; j++)
+			Ship* foundShip = *it;
+			foundShip->hit();
+			if (foundShip->getIsSunk())
 			{
-				for (int k = 0; k < COLS; k++)
-				{
-					if (board[j][k] == 'S')
-					{
-						sunk = false;
-						break;
-					}
-				}
-				if (!sunk)
-				{
-					break;
-				}
-			}
-			if (sunk)
+
+				cout << foundShip->getName() << " Hit and sunk! " << endl;
+				cout << "You destroy the " << name << "'s " << foundShip->getName() << "!!! ^_^" << endl;
+			} else
 			{
-				ships[i]->setIsSunk(true);
-				cout << ships[i]->getName() << " is sunk!" << endl;
+				cout << "Hit!" << endl;
 			}
+		} else
+		{
+			// object not found
 		}
+		board[x][y] = 'X';
 		return true;
 	} else
 	{
 		board[x][y] = '*';
+		cout << "Water!" << endl;
 		return false;
 	}
 }
@@ -213,7 +211,7 @@ bool Player::shoot(int x, int y)
 
 void Player::printShipsBoard()
 {
-	cout << endl;
+	//cout << endl;
 	cout << name << "'s board: " << endl;
 	//Space for the board frame
 	cout << "  ";
@@ -227,7 +225,10 @@ void Player::printShipsBoard()
 		cout << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
-			cout << board[i][j] << " ";
+			if (board[i][j] != '*')
+			{
+				cout << board[i][j] << " ";
+			}
 		}
 		cout << endl;
 	}
@@ -239,12 +240,12 @@ void Player::printShipsBoard()
  * This method will display the board of the indicated player, but just with the shots and the hits made
  * by the opponent. This board can be used to show the history of the shots made by the opponent and check
  * where the player's ships have been hit..
- * 
+ *
  * \param player The player whose history board will be displayed
  */
 void Player::printShootingBoard()
 {
-	cout << name << "'s shooting history board:" << endl;
+	cout << "Shooting history board:" << endl;
 	//Space for the board frame
 	cout << "  ";
 	for (int i = 0; i < COLS; i++)
@@ -257,7 +258,7 @@ void Player::printShootingBoard()
 		cout << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
-			if (board[i][j] == 'S')
+			if (board[i][j] == 'S' || board[i][j] == 'B' || board[i][j] == 'C' || board[i][j] == 'P' || board[i][j] == 'S' || board[i][j] == 'V')
 			{
 				cout << "." << " ";
 			} else
