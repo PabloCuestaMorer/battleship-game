@@ -29,11 +29,11 @@ Player Game::getPlayer(int number)
 
 void Game::saveGame(string filename)
 {
-    std::ofstream file(filename);
+    ofstream file(filename);
     if (file.is_open())
     {
-        file << player1.getName() << std::endl;
-        file << player2.getName() << std::endl;
+        file << player1.getName() << endl;
+        file << player2.getName() << endl;
         // save other game state variables
         file.close();
     }
@@ -41,7 +41,7 @@ void Game::saveGame(string filename)
 
 void Game::loadGame(string filename)
 {
-    std::ifstream file(filename);
+    ifstream file(filename);
     if (file.is_open())
     {
         string name1, name2;
