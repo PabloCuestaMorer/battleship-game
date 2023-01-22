@@ -290,7 +290,7 @@ int main()
 					break;
 				case 2:
 					//cout << "Loading a saved game..." << endl;
-					cerr << "\033[1;31m" << "We are still implementing this functionality, please be patient :)" << "\033[0m" << endl;
+					cerr << "\033[1;32m" << "We are still implementing this functionality, please be patient :)" << "\033[0m" << endl;
 					break;
 				case 3:
 					cout << "Exiting the program..." << endl;
