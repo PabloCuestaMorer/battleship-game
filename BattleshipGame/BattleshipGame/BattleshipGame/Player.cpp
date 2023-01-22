@@ -225,7 +225,11 @@ void Player::printShipsBoard()
 		cout << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
-			if (board[i][j] != '*')
+			// If its a hit do not print on ships board
+			if (board[i][j] == '*')
+			{
+				cout << ". ";
+			} else
 			{
 				cout << board[i][j] << " ";
 			}
