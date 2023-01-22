@@ -289,7 +289,7 @@ void Player::printShootingBoard()
 		cout << "\t\t\t" << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
-			if (board[i][j] == 'S' || board[i][j] == 'B' || board[i][j] == 'C' || board[i][j] == 'P' || board[i][j] == 'S' || board[i][j] == 'V')
+			if (board[i][j] == 'B' || board[i][j] == 'C' || board[i][j] == 'P' || board[i][j] == 'S' || board[i][j] == 'V')
 			{
 				cout << "." << " ";
 			} else
