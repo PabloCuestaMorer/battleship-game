@@ -236,8 +236,8 @@ void startNewGame()
 	player2.setName(name2);
 	//Place ships
 	system("CLS");
-	player2.placeShips();
-	//player2.placeShipsRandomly();
+	//player2.placeShips();
+	player2.placeShipsRandomly();
 	//END Player2 ships
 
 	game.setPlayer(player1, 1);
