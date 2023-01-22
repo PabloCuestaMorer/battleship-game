@@ -1,14 +1,15 @@
 - [1. BATTLESHIP GAME](#1-battleship-game)
   - [1.1. Rules](#11-rules)
-  - [1.2. For developers](#12-for-developers)
-  - [1.3. Future features](#13-future-features)
-  - [1.4. References](#14-references)
+  - [1.2. Screenshots](#12-screenshots)
+  - [1.3. For developers](#13-for-developers)
+  - [1.4. Future features](#14-future-features)
+  - [1.5. References](#15-references)
 
 # 1. BATTLESHIP GAME
+![Battleship_logo.png](https://user-images.githubusercontent.com/43066595/213932096-5b6e6758-00f9-4d68-818b-8f070451a508.png)
+![AirCarrier_ship.png](https://user-images.githubusercontent.com/43066595/213932082-0d33bb9f-05f0-44e7-896e-580806bafc4a.png)
 
-![Battleship_logo.png](https://github.com/PabloCuestaMorer/battleship-game/assets/images/battleship_logo.png)
 
-![AirCarrier_ship.png](https://github.com/PabloCuestaMorer/battleship-game/assets/images/ship.png)
 
 The objective of the academic project for the subject of Object Oriented Programming at San Jorge University in Zaragoza, Spain, is to develop a **C++** game called "Battleship" in which two players take turns strategically placing their own fleet and trying to sink the opposing player's fleet through guessing the location of the opponent's ships on a 10x10 grid. The game includes features such as the option to save and load the current state of the game.
 
@@ -31,16 +32,24 @@ At the beginning of the game, each player must place their ships on their own gr
 - If all spaces of a ship are hit, the ship is considered "**sunk**". If all of the opponent's ships are sunk, the game is over (**hit, sunk and fleet destroyed**).
 - The game also includes the option to save and ~~load~~ (**_Unfinished_**) the current state of the game.
 
+## 1.2. Screenshots
+
+![Capture](https://user-images.githubusercontent.com/43066595/213932754-3b7c1beb-9cd9-44c4-9a1d-90495c54ea71.jpg)
+
+![Capture(1)](https://user-images.githubusercontent.com/43066595/213932742-6fa62375-1d52-42a5-a52c-cbd3d700d6e6.jpg)
+
+
+
 *Developed by Pablo Cuesta. Zaragoza, Spain. San Jorge University*
 
-## 1.2. For developers
+## 1.3. For developers
 
 To activate the automatic placement of ships (instead of by hand).
 In the Main.cpp class:
 
     .placeShipsRandomly();
 
-## 1.3. Future features
+## 1.4. Future features
 
 1. Load game
 2. A single-player mode with an AI opponent
@@ -49,6 +58,6 @@ In the Main.cpp class:
 5. An option to play on different board sizes
 6. An option to play with more players
 
-## 1.4. References
+## 1.5. References
 
 - [1] Wikipedia, "Battleship (game)," [Online]. Available: https://en.wikipedia.org/wiki/Battleship_(game).
