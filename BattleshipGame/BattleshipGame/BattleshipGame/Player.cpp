@@ -209,11 +209,11 @@ bool Player::shoot(int x, int y)
 			if (foundShip->getIsSunk())
 			{
 
-				cout << foundShip->getName() << " Hit and sunk! " << endl;
-				cout << "You destroy the " << name << "'s " << foundShip->getName() << "!!! ^_^" << endl;
+				cout << "\033[1;32m" << foundShip->getName() << " Hit and sunk! " << "\033[0m" << endl;
+				cout << "\033[1;32m" << "You destroy the " << name << "'s " << foundShip->getName() << "!!! ^_^" << "\033[0m" << endl;
 			} else
 			{
-				cout << "Hit!" << endl;
+				cout << "\033[1;32m" << "Hit!" << "\033[0m" << endl;
 			}
 		} else
 		{
@@ -224,14 +224,14 @@ bool Player::shoot(int x, int y)
 	} else if (board[x][y] == 'X' || board[x][y] == '*')
 	{
 		// If you already shoot there
-		cout << "DON'T YOU SEE THAT YOU HAVE ALREADY SHOT THERE!!!!" << endl;
-		cout << "You lose your turn for being stupid. (¬_¬ )" << endl;
+		cout << "\033[1;31m" << "DON'T YOU SEE THAT YOU HAVE ALREADY SHOT THERE!!!!" << "\033[0m" << endl;
+		cout << "\033[1;31m" << "You lose your turn for being stupid. (-_- )" << "\033[0m" << endl;
 		return false;
 	} else
 	{
 		// Then is a water
 		board[x][y] = '*';
-		cout << "Water!" << endl;
+		cout << "\033[1;34m" << "Water!" << "\033[0m" << endl;
 		return false;
 	}
 }
