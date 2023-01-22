@@ -154,9 +154,12 @@ void Player::placeShipsRandomly()
 		bool placed = false;
 		while (!placed)
 		{
-			int row = rand() % ROWS;
-			int col = rand() % COLS;
-			bool isHorizontal = rand() % 2;
+			int randomX = rand() % 10;  //generate a random number 0-9
+			int randomY = rand() % 10;  //generate a random number 0-9
+			ship->setX(randomX);
+			ship->setY(randomY);
+			char randomOrientation = (rand() % 2 == 0) ? 'H' : 'V'; //generate a randomly 'V'/'H'
+			ship->setOrientation(randomOrientation);
 			if (canPlaceShip(ship))
 			{
 				placeShip(ship);
@@ -164,7 +167,6 @@ void Player::placeShipsRandomly()
 			}
 		}
 	}
-	cout << endl;
 	cout << name << "'s game board (randomly generated):" << endl;
 	printShipsBoard();
 }

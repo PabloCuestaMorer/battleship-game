@@ -168,8 +168,8 @@ void startNewGame()
 	player1.setName(name1);
 	//Place ships
 	system("CLS");
-	player1.placeShips();
-	//player1.placeShipsRandomly();
+	//player1.placeShips();
+	player1.placeShipsRandomly();
 	//END Player1 ships
 
 	cout << endl;
@@ -185,8 +185,8 @@ void startNewGame()
 	player2.setName(name2);
 	//Place ships
 	system("CLS");
-	player2.placeShips();
-	//player2.placeShipsRandomly();
+	//player2.placeShips();
+	player2.placeShipsRandomly();
 	//END Player2 ships
 
 	game.setPlayer(player1, 1);
