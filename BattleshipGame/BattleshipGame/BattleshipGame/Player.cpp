@@ -148,16 +148,22 @@ void Player::placeShips()
  */
 void Player::placeShipsRandomly()
 {
+	//generate a random number 0-9
+	mt19937 rng;
+	rng.seed(random_device()());
+	uniform_int_distribution<mt19937::result_type> dist1(0, 9);
+	uniform_int_distribution<mt19937::result_type> dist2(0, 9);
+	uniform_int_distribution<int> dist3(numeric_limits<int>::min(), numeric_limits<int>::max());
+	// randomNumber = dist(rng)
+
 	for (auto ship : ships)
 	{
 		bool placed = false;
 		while (!placed)
 		{
-			int randomX = rand() % 10;  //generate a random number 0-9
-			int randomY = rand() % 10;  //generate a random number 0-9
-			ship->setX(randomX);
-			ship->setY(randomY);
-			char randomOrientation = (rand() % 2 == 0) ? 'H' : 'V'; //generate a randomly 'V'/'H'
+			ship->setX(dist1(rng));
+			ship->setY(dist2(rng));
+			char randomOrientation = (dist3(rng)) ? 'H' : 'V'; //generate a randomly 'V'(even) / 'H'(odd)
 			ship->setOrientation(randomOrientation);
 			if (canPlaceShip(ship))
 			{
@@ -166,14 +172,15 @@ void Player::placeShipsRandomly()
 			}
 		}
 	}
-	cout << name << "'s game board (randomly generated):" << endl;
+	cout << name << "'s game board randomly generated." << endl;
 	printShipsBoard();
 }
 
 bool Player::shoot(int x, int y)
 {
-	if (board[x][y] == 'S' || board[x][y] == 'B' || board[x][y] == 'C' || board[x][y] == 'P' || board[x][y] == 'S' || board[x][y] == 'V')
+	if (board[x][y] == 'B' || board[x][y] == 'C' || board[x][y] == 'P' || board[x][y] == 'S' || board[x][y] == 'V')
 	{
+		// if is a ship shoot
 		char symbolHit = board[x][y];
 		// Find the ship in ships vector that mathes the hit symbol
 		auto it = find_if(ships.begin(), ships.end(), [symbolHit](Ship* ship) {
@@ -199,15 +206,20 @@ bool Player::shoot(int x, int y)
 		}
 		board[x][y] = 'X';
 		return true;
+	} else if (board[x][y] == 'X' || board[x][y] == '*')
+	{
+		// If you already shoot there
+		cout << "DON'T YOU SEE THAT YOU HAVE ALREADY SHOT THERE!!!!" << endl;
+		cout << "You lose your turn for being stupid. (¬_¬ )" << endl;
+		return false;
 	} else
 	{
+		// Then is a water
 		board[x][y] = '*';
 		cout << "Water!" << endl;
 		return false;
 	}
 }
-
-
 
 void Player::printShipsBoard()
 {
@@ -249,9 +261,9 @@ void Player::printShipsBoard()
  */
 void Player::printShootingBoard()
 {
-	cout << "Shooting history board:" << endl;
+	cout << "\t\t\t" << "Shooting history board:" << endl;
 	//Space for the board frame
-	cout << "  ";
+	cout << "\t\t\t  ";
 	for (int i = 0; i < COLS; i++)
 	{
 		cout << i << " ";
@@ -259,7 +271,7 @@ void Player::printShootingBoard()
 	cout << endl;
 	for (int i = 0; i < ROWS; i++)
 	{
-		cout << (char)('A' + i) << " ";
+		cout << "\t\t\t" << (char)('A' + i) << " ";
 		for (int j = 0; j < COLS; j++)
 		{
 			if (board[i][j] == 'S' || board[i][j] == 'B' || board[i][j] == 'C' || board[i][j] == 'P' || board[i][j] == 'S' || board[i][j] == 'V')
