@@ -42,6 +42,9 @@ public:
 	// Getters/Setters
 	string getName();
 	void setName(string name);
+	vector<Ship*> getShips() const;
+	void setShips(const vector<Ship*>& ships);
+	char(*getBoard())[10];
 	// methods
 	void placeShips();
 	void placeShipsRandomly();
@@ -49,8 +52,6 @@ public:
 	bool allSunk();
 	void printShipsBoard();
 	void printShootingBoard();
-	void savePlayer(string filename);
-	void loadPlayer(string filename);
 	//Overloading
 	Player& operator=(const Player& other);
 };

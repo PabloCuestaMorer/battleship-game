@@ -167,14 +167,18 @@ void battle(Game game)
 		} else if (menuOp == 2)
 		{
 			//Save game option
-			string filename;
+			string path = "C:\\Games\\Battleship\\";
+			string ext = ".txt";
+			string fileName;
 			cout << "Enter filename: ";
-			cin >> filename;
-			game.saveGame(filename);
-			cout << "Game saved!" << endl;
+			cin >> fileName;
+			string finalPath = path + fileName + ext;
+			game.saveGame(finalPath);
+			cout << "Game saved at: " << finalPath << endl;
 		} else
 		{
-			cout << "Invalid choice. Please try again." << endl;
+			system("cls");
+			cerr << "\033[1;31m" << "ERROR contact support." << "\033[0m" << endl;
 		}
 		// Check gameOver
 		if (turnsCounter > minTurns && player2.allSunk())
@@ -285,7 +289,8 @@ int main()
 					startNewGame();
 					break;
 				case 2:
-					cout << "Loading a saved game..." << endl;
+					//cout << "Loading a saved game..." << endl;
+					cerr << "\033[1;31m" << "We are still implementing this functionality, please be patient :)" << "\033[0m" << endl;
 					break;
 				case 3:
 					cout << "Exiting the program..." << endl;

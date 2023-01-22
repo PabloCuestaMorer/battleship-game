@@ -32,9 +32,37 @@ void Game::saveGame(string filename)
     ofstream file(filename);
     if (file.is_open())
     {
+        // Save player1
         file << player1.getName() << endl;
+        vector<Ship*> ships = player1.getShips();
+        for (auto& ship : ships)
+        {
+            file << ship->getName() << " " << ship->getSize() << " " << ship->getIsSunk() << endl;
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                file << player1.getBoard()[i][j] << " ";
+            }
+            file << endl;
+        }
+        // Save player2
         file << player2.getName() << endl;
-        // save other game state variables
+        ships = player2.getShips();
+        for (auto& ship : ships)
+        {
+            file << ship->getName() << " " << ship->getSize() << " " << ship->getIsSunk() << endl;
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                file << player2.getBoard()[i][j] << " ";
+            }
+            file << endl;
+        }
+
         file.close();
     }
 }

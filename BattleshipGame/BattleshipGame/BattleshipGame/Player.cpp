@@ -84,6 +84,21 @@ void Player::setName(string name)
 	this->name = name;
 }
 
+vector<Ship*> Player::getShips() const
+{
+	return ships;
+}
+
+void Player::setShips(const vector<Ship*>& ships)
+{
+	this->ships = ships;
+}
+
+char(*Player::getBoard())[10]
+{
+	return board;
+}
+
 void Player::placeShips()
 {
 	for (int i = 0; i < ships.size(); i++)
@@ -297,55 +312,6 @@ bool Player::allSunk()
 		}
 	}
 	return true;
-}
-
-void Player::savePlayer(string filename)
-{
-	ofstream file(filename);
-	if (file.is_open())
-	{
-		file << name << endl;
-		for (int i = 0; i < ships.size(); i++)
-		{
-			file << ships[i]->getName() << " " << ships[i]->getSize() << " " << ships[i]->getIsSunk() << endl;
-		}
-		for (int i = 0; i < ROWS; i++)
-		{
-			for (int j = 0; j < COLS; j++)
-			{
-				file << board[i][j] << " ";
-			}
-			file << endl;
-		}
-		file.close();
-	}
-}
-
-void Player::loadPlayer(string filename)
-{
-	ifstream file(filename);
-	if (file.is_open())
-	{
-		file >> name;
-		for (int i = 0; i < ships.size(); i++)
-		{
-			string shipName;
-			int shipSize;
-			bool shipSunk;
-			file >> shipName >> shipSize >> shipSunk;
-			ships[i]->setName(shipName);
-			ships[i]->setSize(shipSize);
-			ships[i]->setIsSunk(shipSunk);
-		}
-		for (int i = 0; i < ROWS; i++)
-		{
-			for (int j = 0; j < COLS; j++)
-			{
-				file >> board[i][j];
-			}
-		}
-		file.close();
-	}
 }
 
 Player& Player::operator=(const Player& other)
