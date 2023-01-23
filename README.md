@@ -44,7 +44,7 @@ At the beginning of the game, each player must place their ships on their own gr
 
 ## 1.3. For developers
 
-To activate the automatic placement of ships (instead of by hand).
+To activate the automatic placement of ships (instead of manually).
 In the Main.cpp class:
 
     .placeShipsRandomly();
